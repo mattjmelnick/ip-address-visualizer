@@ -8,15 +8,15 @@
 </head>
 <body>
     <main>
-        <div class="ip-address-display-area">
-            <span class="octet o1"></span>.<span class="octet o2"></span>.<span class="octet o3"></span>.<span class="octet o4"></span>
+        <div class="binary-labels">
+            <div class="first-octet"></div>
+            <div class="second-octet"></div>
+            <div class="third-octet"></div>
+            <div class="fourth-octet"></div>
         </div>
-        <div class="binary-display-area">
-            <div class="binary-labels">
-                <div class="first-octet"></div>
-                <div class="second-octet"></div>
-                <div class="third-octet"></div>
-                <div class="fourth-octet"></div>
+        <div class="ip-binary-number-area">
+            <div class="ip-address-display-area">
+                <span class="octet o1"></span>.<span class="octet o2"></span>.<span class="octet o3"></span>.<span class="octet o4"></span>
             </div>
             <div class="binary-area">
                 <div class="row-1"></div>
@@ -24,18 +24,18 @@
                 <div class="row-3"></div>
                 <div class="row-4"></div>
             </div>
-            <div class="input-area">
-                <div class="ip-input">
-                    <input type="text" id="firstoct" name="firstoct">.<input type="text" id="secondoct" name="secondoct">.<input type="text" id="thirdoct" name="thirdoct">.<input type="text" id="fourthoct" name="fourthoct">
-                </div>
-                <div class="buttons">
-                    <button class="generate-button">GENERATE</button>
-                    <button class="random-button">RANDOM</button>
-                    <button class="auto-button">AUTO</button>
-                </div>
+            <div class="decimal-numbers"></div>
+        </div>
+        <div class="input-area">
+            <div class="ip-input">
+                <input type="text" id="firstoct" name="firstoct" size="1" maxlength="3">.<input type="text" id="secondoct" name="secondoct" size="1" maxlength="3">.<input type="text" id="thirdoct" name="thirdoct" size="1" maxlength="3">.<input type="text" id="fourthoct" name="fourthoct" size="1" maxlength="3">
+            </div>
+            <div class="buttons">
+                <button class="generate-button">GENERATE</button>
+                <button class="random-button">RANDOM</button>
+                <button class="auto-button">AUTO</button>
             </div>
         </div>
-        <div class="decimal-numbers"></div>
     </main>
 <script src="visualizer.js"></script>   
 </body>
