@@ -9,27 +9,35 @@
 <body>
     <main>
         <div class="binary-labels">
-            <div class="first-octet"></div>
-            <div class="second-octet"></div>
-            <div class="third-octet"></div>
-            <div class="fourth-octet"></div>
+            <div class="first-octet"><h3>192</h3></div>
+            <div class="second-octet"><h3>168</h3></div>
+            <div class="third-octet"><h3>1</h3></div>
+            <div class="fourth-octet"><h3>1</h3></div>
         </div>
-        <div class="ip-binary-number-area">
-            <div class="ip-address-display-area">
-                <span class="octet o1"></span>.<span class="octet o2"></span>.<span class="octet o3"></span>.<span class="octet o4"></span>
-            </div>
-            <div class="binary-area">
-                <div class="row-1"></div>
-                <div class="row-2"></div>
-                <div class="row-3"></div>
-                <div class="row-4"></div>
-            </div>
-            <div class="decimal-numbers"></div>
+        <div class="ip-address-display-area">
+            <span class="octet-1">192</span>.<span class="octet-2">168</span>.<span class="octet-3">1</span>.<span class="octet-4">1</span>
+        </div>
+        <div class="binary-area">
+            <div class="row-1"></div>
+            <div class="row-2"></div>
+            <div class="row-3"></div>
+            <div class="row-4"></div>
+        </div>
+        <div class="decimal-numbers">
+            <h3>128</h3>
+            <h3>64</h3>
+            <h3>32</h3>
+            <h3>16</h3>
+            <h3>8</h3>
+            <h3>4</h3>
+            <h3>2</h3>
+            <h3>1</h3>
         </div>
         <div class="input-area">
             <div class="ip-input">
                 <input type="text" id="firstoct" name="firstoct" size="1" maxlength="3">.<input type="text" id="secondoct" name="secondoct" size="1" maxlength="3">.<input type="text" id="thirdoct" name="thirdoct" size="1" maxlength="3">.<input type="text" id="fourthoct" name="fourthoct" size="1" maxlength="3">
             </div>
+            <div class="error-message">Enter IP Address</div>
             <div class="buttons">
                 <button class="generate-button">GENERATE</button>
                 <button class="random-button">RANDOM</button>
