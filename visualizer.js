@@ -41,11 +41,14 @@ let secondHeaderDisplay = document.querySelector(".octet-2");
 let thirdHeaderDisplay = document.querySelector(".octet-3");
 let fourthHeaderDisplay = document.querySelector(".octet-4");
 
+let ipAddressNum = new RegExp("^(?!.*\\.0{2,3})((1?[1-9]?[0-9]|2[0-4][0-9]|25[0-5])\\.){3}(1?[1-9]?[0-9]|2[0-4][0-9]|25[0-5])$");
+
 // Display header and sidebar octets based on inputs
 let generateButton = document.querySelector(".generate-button");
 generateButton.addEventListener("click", () => 
 {
-    if (firstOctetInput.value === "" && secondOctetInput.value === "" && thirdOctetInput.value === "" && fourthOctetInput.value === "")
+    if (firstOctetInput.value === "" && secondOctetInput.value === "" &&
+        thirdOctetInput.value === "" && fourthOctetInput.value === "")
     {
         firstOctetDisplay.innerHTML = `<h3>0<h3>`;
         firstHeaderDisplay.textContent = '0';
@@ -58,14 +61,73 @@ generateButton.addEventListener("click", () =>
     }
     else
     {
-        firstOctetDisplay.innerHTML = `<h3>${firstOctetInput.value}<h3>`;
-        firstHeaderDisplay.textContent = firstOctetInput.value;
-        secondOctetDisplay.innerHTML = `<h3>${secondOctetInput.value}<h3>`;
-        secondHeaderDisplay.textContent = secondOctetInput.value;
-        thirdOctetDisplay.innerHTML = `<h3>${thirdOctetInput.value}<h3>`;
-        thirdHeaderDisplay.textContent = thirdOctetInput.value;
-        fourthOctetDisplay.innerHTML = `<h3>${fourthOctetInput.value}<h3>`;
-        fourthHeaderDisplay.textContent = fourthOctetInput.value;
+        let error = document.querySelector(".error-message");
+        let inputNum = `${firstOctetInput.value}.${secondOctetInput.value}.${thirdOctetInput.value}.${fourthOctetInput.value}`;
+        
+        if (inputNum.match(ipAddressNum))
+        {
+            error.textContent = "";
+            firstOctetDisplay.innerHTML = `<h3>${firstOctetInput.value}<h3>`;
+            firstHeaderDisplay.textContent = firstOctetInput.value;
+            secondOctetDisplay.innerHTML = `<h3>${secondOctetInput.value}<h3>`;
+            secondHeaderDisplay.textContent = secondOctetInput.value;
+            thirdOctetDisplay.innerHTML = `<h3>${thirdOctetInput.value}<h3>`;
+            thirdHeaderDisplay.textContent = thirdOctetInput.value;
+            fourthOctetDisplay.innerHTML = `<h3>${fourthOctetInput.value}<h3>`;
+            fourthHeaderDisplay.textContent = fourthOctetInput.value;
+        }
+        else
+        {
+            error.textContent = "Try again";
+            firstOctetInput.value = "";
+            firstOctetDisplay.innerHTML = `<h3>0<h3>`;
+            firstHeaderDisplay.textContent = '0';
+            secondOctetInput.value = "";
+            secondOctetDisplay.innerHTML = `<h3>0<h3>`;
+            secondHeaderDisplay.textContent = '0';
+            thirdOctetInput.value = "";
+            thirdOctetDisplay.innerHTML = `<h3>0<h3>`;
+            thirdHeaderDisplay.textContent = '0';
+            fourthOctetInput.value = "";
+            fourthOctetDisplay.innerHTML = `<h3>0<h3>`;
+            fourthHeaderDisplay.textContent = '0';
+        }
     }
-    
 });
+
+// Random button
+let randomButton = document.querySelector(".random-button");
+randomButton.addEventListener("click", () =>
+{
+    let randomIPAddress = getRandomIPAddress();
+    ipOctets = randomIPAddress.split(".");
+    firstOctetDisplay.innerHTML = `<h3>${ipOctets[0]}<h3>`;
+    firstHeaderDisplay.textContent = ipOctets[0];
+    secondOctetDisplay.innerHTML = `<h3>${ipOctets[1]}<h3>`;
+    secondHeaderDisplay.textContent = ipOctets[1];
+    thirdOctetDisplay.innerHTML = `<h3>${ipOctets[2]}<h3>`;
+    thirdHeaderDisplay.textContent = ipOctets[2];
+    fourthOctetDisplay.innerHTML = `<h3>${ipOctets[3]}<h3>`;
+    fourthHeaderDisplay.textContent = ipOctets[3];
+});
+
+function getRandomIntInclusive(min, max)
+{
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+};
+
+function getRandomIPAddress()
+{
+    let firstRandom = getRandomIntInclusive(0, 255);
+    let secondRandom = getRandomIntInclusive(0, 255);
+    let thirdRandom = getRandomIntInclusive(0, 255);
+    let fourthRandom = getRandomIntInclusive(0, 255);
+    let randomIP = `${firstRandom}.${secondRandom}.${thirdRandom}.${fourthRandom}`;
+    return randomIP;
+}
+
+//TODO: Change the binary numbers in display area based on octet conversion
+//      Make binary numbers clickable to manually change numbers
+//      Loop through IP addresses when auto button is clicked
