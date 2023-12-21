@@ -51,6 +51,7 @@ main {
     place-self: center;
     display: grid;
     grid-template-rows: repeat(4, 1fr);
+    box-sizing: border-box;
 }
 
 .row-1, .row-2, .row-3, .row-4 {
@@ -61,6 +62,14 @@ main {
 .binary-label {
     font-size: 72px;
     text-align: center;
+}
+
+.binary-label:hover {
+    background-color: #b8bcbd;
+}
+
+.binary-label:active {
+    background-color: #8e9192;
 }
 
 .decimal-numbers {

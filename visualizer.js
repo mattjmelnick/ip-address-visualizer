@@ -10,17 +10,18 @@ const ROWWIDTH = (750 / 8);
 
 // Create binary labels in the binary display area
 rows.forEach(row =>
+{
+    for (let i = 0; i < 8; i++)
     {
-        for (let i = 0; i < 8; i++)
-        {
-            let binaryLabel = document.createElement("div");
-            binaryLabel.classList.toggle("binary-label");
-            binaryLabel.style.height = `${ROWHEIGHT}px`;
-            binaryLabel.style.width = `${ROWWIDTH}px`;
-            binaryLabel.textContent = '0';
-            row.appendChild(binaryLabel);
-        }
-    });
+        let binaryLabel = document.createElement("div");
+        binaryLabel.classList.toggle("binary-label");
+        binaryLabel.style.border = "1px solid lightgrey";
+        binaryLabel.style.height = `${ROWHEIGHT}px`;
+        binaryLabel.style.width = `${ROWWIDTH}px`;
+        binaryLabel.textContent = '0';
+        row.appendChild(binaryLabel);
+    }
+});
 
 // Set input to correspond to each display octet
 let firstOctetInput = document.getElementById("firstoct");
@@ -44,12 +45,27 @@ let fourthHeaderDisplay = document.querySelector(".octet-4");
 let generateButton = document.querySelector(".generate-button");
 generateButton.addEventListener("click", () => 
 {
-    firstOctetDisplay.innerHTML = `<h3>${firstOctetInput.value}<h3>`;
-    firstHeaderDisplay.textContent = firstOctetInput.value;
-    secondOctetDisplay.innerHTML = `<h3>${secondOctetInput.value}<h3>`;
-    secondHeaderDisplay.textContent = secondOctetInput.value;
-    thirdOctetDisplay.innerHTML = `<h3>${thirdOctetInput.value}<h3>`;
-    thirdHeaderDisplay.textContent = thirdOctetInput.value;
-    fourthOctetDisplay.innerHTML = `<h3>${fourthOctetInput.value}<h3>`;
-    fourthHeaderDisplay.textContent = fourthOctetInput.value;
+    if (firstOctetInput.value === "" && secondOctetInput.value === "" && thirdOctetInput.value === "" && fourthOctetInput.value === "")
+    {
+        firstOctetDisplay.innerHTML = `<h3>0<h3>`;
+        firstHeaderDisplay.textContent = '0';
+        secondOctetDisplay.innerHTML = `<h3>0<h3>`;
+        secondHeaderDisplay.textContent = '0';
+        thirdOctetDisplay.innerHTML = `<h3>0<h3>`;
+        thirdHeaderDisplay.textContent = '0';
+        fourthOctetDisplay.innerHTML = `<h3>0<h3>`;
+        fourthHeaderDisplay.textContent = '0';
+    }
+    else
+    {
+        firstOctetDisplay.innerHTML = `<h3>${firstOctetInput.value}<h3>`;
+        firstHeaderDisplay.textContent = firstOctetInput.value;
+        secondOctetDisplay.innerHTML = `<h3>${secondOctetInput.value}<h3>`;
+        secondHeaderDisplay.textContent = secondOctetInput.value;
+        thirdOctetDisplay.innerHTML = `<h3>${thirdOctetInput.value}<h3>`;
+        thirdHeaderDisplay.textContent = thirdOctetInput.value;
+        fourthOctetDisplay.innerHTML = `<h3>${fourthOctetInput.value}<h3>`;
+        fourthHeaderDisplay.textContent = fourthOctetInput.value;
+    }
+    
 });
