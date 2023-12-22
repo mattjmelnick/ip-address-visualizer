@@ -46,6 +46,7 @@ let firstRowNums = Array.from(row1.querySelectorAll(".binary-label"));
 let secondRowNums = Array.from(row2.querySelectorAll(".binary-label"));
 let thirdRowNums = Array.from(row3.querySelectorAll(".binary-label"));
 let fourthRowNums = Array.from(row4.querySelectorAll(".binary-label"));
+let rowNums = [firstRowNums, secondRowNums, thirdRowNums, fourthRowNums];
 
 let ipAddressNum = new RegExp("^(?!.*\\.0{2,3})((1?[1-9]?[0-9]|2[0-4][0-9]|25[0-5])\\.){3}(1?[1-9]?[0-9]|2[0-4][0-9]|25[0-5])$");
 
@@ -142,13 +143,10 @@ function getRandomIPAddress()
     return randomIP;
 }
 
-//TODO:
-//      Make binary numbers clickable to manually change numbers
-//      Loop through IP addresses when auto button is clicked
+const BINARY_NUMS = [128, 64, 32, 16, 8, 4, 2, 1];
 
 function convertToBinary(num)
 {
-    const BINARY_NUMS = [128, 64, 32, 16, 8, 4, 2, 1];
     let finalNum = [];
     BINARY_NUMS.forEach(bNum =>
     {
@@ -188,3 +186,119 @@ function showBinaryNumbers(num1, num2, num3, num4)
         num4.shift();
     }
 }
+
+// Make binary numbers in display area clickable
+function clickBinary(row, header, sidebar)
+{
+    for (let num of row)
+    {
+        num.addEventListener("click", () =>
+        {
+            if (num === row[0] && num.textContent === '0')
+            {
+                num.textContent = '1';
+                header.textContent = Number(header.textContent) + 128;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[0] && num.textContent === '1')
+            {
+                num.textContent = '0';
+                header.textContent = Number(header.textContent) - 128;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[1] && num.textContent === '0')
+            {
+                num.textContent = '1';
+                header.textContent = Number(header.textContent) + 64;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[1] && num.textContent === '1')
+            {
+                num.textContent = '0';
+                header.textContent = Number(header.textContent) - 64;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[2] && num.textContent === '0')
+            {
+                num.textContent = '1';
+                header.textContent = Number(header.textContent) + 32;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[2] && num.textContent === '1')
+            {
+                num.textContent = '0';
+                header.textContent = Number(header.textContent) - 32;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[3] && num.textContent === '0')
+            {
+                num.textContent = '1';
+                header.textContent = Number(header.textContent) + 16;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[3] && num.textContent === '1')
+            {
+                num.textContent = '0';
+                header.textContent = Number(header.textContent) - 16;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[4] && num.textContent === '0')
+            {
+                num.textContent = '1';
+                header.textContent = Number(header.textContent) + 8;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[4] && num.textContent === '1')
+            {
+                num.textContent = '0';
+                header.textContent = Number(header.textContent) - 8;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[5] && num.textContent === '0')
+            {
+                num.textContent = '1';
+                header.textContent = Number(header.textContent) + 4;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[5] && num.textContent === '1')
+            {
+                num.textContent = '0';
+                header.textContent = Number(header.textContent) - 4;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[6] && num.textContent === '0')
+            {
+                num.textContent = '1';
+                header.textContent = Number(header.textContent) + 2;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[6] && num.textContent === '1')
+            {
+                num.textContent = '0';
+                header.textContent = Number(header.textContent) - 2;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[7] && num.textContent === '0')
+            {
+                num.textContent = '1';
+                header.textContent = Number(header.textContent) + 1;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+            else if (num === row[7] && num.textContent === '1')
+            {
+                num.textContent = '0';
+                header.textContent = Number(header.textContent) - 1;
+                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+            }
+        });
+    }
+}
+
+clickBinary(firstRowNums, firstHeaderDisplay, firstOctetDisplay);
+clickBinary(secondRowNums, secondHeaderDisplay, secondOctetDisplay);
+clickBinary(thirdRowNums, thirdHeaderDisplay, thirdOctetDisplay);
+clickBinary(fourthRowNums, fourthHeaderDisplay, fourthOctetDisplay);
+
+//TODO:
+//      Generate button: Reset binary numbers when input is empty
+//      Loop through IP addresses when auto button is clicked
