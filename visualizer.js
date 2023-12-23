@@ -201,15 +201,14 @@ function clickBinary(row, header, sidebar)
                 {
                     num.textContent = '1';
                     header.textContent = Number(header.textContent) + BINARY_NUMS[i];
-                    sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
                 }
                 else if (num === row[i] && num.textContent === '1')
                 {
                     num.textContent = '0';
                     header.textContent = Number(header.textContent) - BINARY_NUMS[i];
-                    sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
                 }
-            }   
+            }
+            sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
         });
     }
 }
@@ -227,5 +226,78 @@ function resetBinaryLabels()
         num.textContent = '0';
     }
 }
-//TODO:
-//      Loop through IP addresses when auto button is clicked
+
+let autoButton = document.querySelector(".auto-button");
+autoButton.addEventListener("click", autoGenerate);
+
+// Cycle through IP addresses
+let isAdding = null;
+function addToAddress()
+{   
+    if (isAdding)
+    {
+        clearInterval(isAdding);
+        isAdding = null;
+    }
+    else
+    {
+        isAdding = setInterval(() =>
+        {
+            fourthHeaderDisplay.textContent = Number(fourthHeaderDisplay.textContent) + 1;
+            fourthOctetDisplay.innerHTML = `<h3>${fourthHeaderDisplay.textContent}<h3>`;
+            let firstOct = convertToBinary(Number(firstHeaderDisplay.textContent));
+            let secondOct = convertToBinary(Number(secondHeaderDisplay.textContent));
+            let thirdOct = convertToBinary(Number(thirdHeaderDisplay.textContent));
+            let fourthOct = convertToBinary(Number(fourthHeaderDisplay.textContent));
+            setTimeout(showBinaryNumbers(firstOct, secondOct, thirdOct, fourthOct), 500);
+            if (fourthHeaderDisplay.textContent === "256")
+            {
+                fourthHeaderDisplay.textContent = "0";
+                fourthOctetDisplay.innerHTML = `<h3>${fourthHeaderDisplay.textContent}<h3>`;
+                thirdHeaderDisplay.textContent = Number(thirdHeaderDisplay.textContent) + 1;
+                thirdOctetDisplay.innerHTML = `<h3>${thirdHeaderDisplay.textContent}<h3>`;
+            }
+            if (thirdHeaderDisplay.textContent === "256")
+            {
+                thirdHeaderDisplay.textContent = "0";
+                thirdOctetDisplay.innerHTML = `<h3>${thirdHeaderDisplay.textContent}<h3>`;
+                secondHeaderDisplay.textContent = Number(secondHeaderDisplay.textContent) + 1;
+                secondOctetDisplay.innerHTML = `<h3>${secondHeaderDisplay.textContent}<h3>`;
+            }
+            if (secondHeaderDisplay.textContent === "256")
+            {
+                secondHeaderDisplay.textContent = "0";
+                secondOctetDisplay.innerHTML = `<h3>${secondHeaderDisplay.textContent}<h3>`;
+                firstHeaderDisplay.textContent = Number(firstHeaderDisplay.textContent) + 1;
+                firstOctetDisplay.innerHTML = `<h3>${firstHeaderDisplay.textContent}<h3>`;
+            }
+            if (firstHeaderDisplay.textContent === "256")
+            {
+                firstHeaderDisplay.textContent = "0";
+                secondHeaderDisplay.textContent = "0";
+                thirdHeaderDisplay.textContent = "0";
+                fourthHeaderDisplay.textContent = "0";
+                firstOctetDisplay.innerHTML = `<h3>${firstHeaderDisplay.textContent}<h3>`;
+                secondOctetDisplay.innerHTML = `<h3>${secondHeaderDisplay.textContent}<h3>`;
+                thirdOctetDisplay.innerHTML = `<h3>${thirdHeaderDisplay.textContent}<h3>`;
+                fourthOctetDisplay.innerHTML = `<h3>${fourthHeaderDisplay.textContent}<h3>`;
+            }
+        }, 500);
+   }
+}
+
+function autoGenerate()
+{
+    autoButton.removeEventListener("click", autoGenerate);
+    autoButton.addEventListener("click", stopAuto);
+    autoButton.textContent = "STOP";
+    addToAddress();
+}
+
+function stopAuto()
+{
+    autoButton.removeEventListener("click", stopAuto);
+    autoButton.addEventListener("click", autoGenerate);
+    autoButton.textContent = "AUTO";
+    addToAddress();
+}
