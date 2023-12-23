@@ -70,6 +70,7 @@ generateButton.addEventListener("click", () =>
         thirdOctetInput.value === "" && fourthOctetInput.value === "")
     {
         resetDisplayLabels();
+        resetBinaryLabels();
     }
     else
     {
@@ -194,102 +195,21 @@ function clickBinary(row, header, sidebar)
     {
         num.addEventListener("click", () =>
         {
-            if (num === row[0] && num.textContent === '0')
+            for (let i = 0; i < row.length; i++)
             {
-                num.textContent = '1';
-                header.textContent = Number(header.textContent) + 128;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[0] && num.textContent === '1')
-            {
-                num.textContent = '0';
-                header.textContent = Number(header.textContent) - 128;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[1] && num.textContent === '0')
-            {
-                num.textContent = '1';
-                header.textContent = Number(header.textContent) + 64;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[1] && num.textContent === '1')
-            {
-                num.textContent = '0';
-                header.textContent = Number(header.textContent) - 64;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[2] && num.textContent === '0')
-            {
-                num.textContent = '1';
-                header.textContent = Number(header.textContent) + 32;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[2] && num.textContent === '1')
-            {
-                num.textContent = '0';
-                header.textContent = Number(header.textContent) - 32;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[3] && num.textContent === '0')
-            {
-                num.textContent = '1';
-                header.textContent = Number(header.textContent) + 16;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[3] && num.textContent === '1')
-            {
-                num.textContent = '0';
-                header.textContent = Number(header.textContent) - 16;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[4] && num.textContent === '0')
-            {
-                num.textContent = '1';
-                header.textContent = Number(header.textContent) + 8;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[4] && num.textContent === '1')
-            {
-                num.textContent = '0';
-                header.textContent = Number(header.textContent) - 8;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[5] && num.textContent === '0')
-            {
-                num.textContent = '1';
-                header.textContent = Number(header.textContent) + 4;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[5] && num.textContent === '1')
-            {
-                num.textContent = '0';
-                header.textContent = Number(header.textContent) - 4;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[6] && num.textContent === '0')
-            {
-                num.textContent = '1';
-                header.textContent = Number(header.textContent) + 2;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[6] && num.textContent === '1')
-            {
-                num.textContent = '0';
-                header.textContent = Number(header.textContent) - 2;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[7] && num.textContent === '0')
-            {
-                num.textContent = '1';
-                header.textContent = Number(header.textContent) + 1;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
-            else if (num === row[7] && num.textContent === '1')
-            {
-                num.textContent = '0';
-                header.textContent = Number(header.textContent) - 1;
-                sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
-            }
+                if (num === row[i] && num.textContent === '0')
+                {
+                    num.textContent = '1';
+                    header.textContent = Number(header.textContent) + BINARY_NUMS[i];
+                    sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+                }
+                else if (num === row[i] && num.textContent === '1')
+                {
+                    num.textContent = '0';
+                    header.textContent = Number(header.textContent) - BINARY_NUMS[i];
+                    sidebar.innerHTML = `<h3>${header.textContent}<h3>`;
+                }
+            }   
         });
     }
 }
@@ -299,6 +219,13 @@ clickBinary(secondRowNums, secondHeaderDisplay, secondOctetDisplay);
 clickBinary(thirdRowNums, thirdHeaderDisplay, thirdOctetDisplay);
 clickBinary(fourthRowNums, fourthHeaderDisplay, fourthOctetDisplay);
 
+function resetBinaryLabels()
+{
+    let binaryNumbers = Array.from(document.querySelectorAll(".binary-label"));
+    for (let num of binaryNumbers)
+    {
+        num.textContent = '0';
+    }
+}
 //TODO:
-//      Generate button: Reset binary numbers when input is empty
 //      Loop through IP addresses when auto button is clicked
