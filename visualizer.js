@@ -48,8 +48,6 @@ let thirdRowNums = Array.from(row3.querySelectorAll(".binary-label"));
 let fourthRowNums = Array.from(row4.querySelectorAll(".binary-label"));
 let rowNums = [firstRowNums, secondRowNums, thirdRowNums, fourthRowNums];
 
-let ipAddressNum = new RegExp("^(?!.*\\.0{2,3})((1?[1-9]?[0-9]|2[0-4][0-9]|25[0-5])\\.){3}(1?[1-9]?[0-9]|2[0-4][0-9]|25[0-5])$");
-
 function resetDisplayLabels()
 {
     firstOctetDisplay.innerHTML = `<h3>0<h3>`;
@@ -60,6 +58,37 @@ function resetDisplayLabels()
     thirdHeaderDisplay.textContent = '0';
     fourthOctetDisplay.innerHTML = `<h3>0<h3>`;
     fourthHeaderDisplay.textContent = '0';
+}
+
+function resetBinaryLabels()
+{
+    let binaryNumbers = Array.from(document.querySelectorAll(".binary-label"));
+    for (let num of binaryNumbers)
+    {
+        num.textContent = '0';
+    }
+}
+
+let ipAddressNum = new RegExp("^(?!.*\\.0{2,3})((1?[1-9]?[0-9]|2[0-4][0-9]|25[0-5])\\.){3}(1?[1-9]?[0-9]|2[0-4][0-9]|25[0-5])$");
+
+const BINARY_NUMS = [128, 64, 32, 16, 8, 4, 2, 1];
+
+function convertToBinary(num)
+{
+    let finalNum = [];
+    BINARY_NUMS.forEach(bNum =>
+    {
+        if (num >= bNum)
+        {
+            finalNum.push('1');
+            num -= bNum;
+        }
+        else if (num < bNum)
+        {
+            finalNum.push('0');
+        }
+    });
+    return finalNum;
 }
 
 // Display header and sidebar octets based on inputs
@@ -108,7 +137,9 @@ generateButton.addEventListener("click", () =>
 
 // Random button
 let randomButton = document.querySelector(".random-button");
-randomButton.addEventListener("click", () =>
+randomButton.addEventListener("click", generateRandomIP);
+
+function generateRandomIP()
 {
     let randomIPAddress = getRandomIPAddress();
     ipOctets = randomIPAddress.split(".");
@@ -125,7 +156,7 @@ randomButton.addEventListener("click", () =>
     thirdRandomAddress = convertToBinary(ipOctets[2]);
     fourthRandomAddress = convertToBinary(ipOctets[3]);
     showBinaryNumbers(firstRandomAddress, secondRandomAddress, thirdRandomAddress, fourthRandomAddress);
-});
+}
 
 function getRandomIntInclusive(min, max)
 {
@@ -142,26 +173,6 @@ function getRandomIPAddress()
     let fourthRandom = getRandomIntInclusive(0, 255);
     let randomIP = `${firstRandom}.${secondRandom}.${thirdRandom}.${fourthRandom}`;
     return randomIP;
-}
-
-const BINARY_NUMS = [128, 64, 32, 16, 8, 4, 2, 1];
-
-function convertToBinary(num)
-{
-    let finalNum = [];
-    BINARY_NUMS.forEach(bNum =>
-    {
-        if (num >= bNum)
-        {
-            finalNum.push('1');
-            num -= bNum;
-        }
-        else if (num < bNum)
-        {
-            finalNum.push('0');
-        }
-    });
-    return finalNum;
 }
 
 function showBinaryNumbers(num1, num2, num3, num4)
@@ -218,19 +229,10 @@ clickBinary(secondRowNums, secondHeaderDisplay, secondOctetDisplay);
 clickBinary(thirdRowNums, thirdHeaderDisplay, thirdOctetDisplay);
 clickBinary(fourthRowNums, fourthHeaderDisplay, fourthOctetDisplay);
 
-function resetBinaryLabels()
-{
-    let binaryNumbers = Array.from(document.querySelectorAll(".binary-label"));
-    for (let num of binaryNumbers)
-    {
-        num.textContent = '0';
-    }
-}
-
+// Cycle through IP addresses
 let autoButton = document.querySelector(".auto-button");
 autoButton.addEventListener("click", autoGenerate);
 
-// Cycle through IP addresses
 let isAdding = null;
 function addToAddress()
 {   
@@ -300,4 +302,38 @@ function stopAuto()
     autoButton.addEventListener("click", autoGenerate);
     autoButton.textContent = "AUTO";
     addToAddress();
+}
+
+// Cycle through random IP addresses
+let autoRandomButton = document.querySelector(".auto-random-button");
+autoRandomButton.addEventListener("click", autoRandom);
+
+let isAutoGenerating = null;
+function randomAutoGenerate()
+{
+    if (isAutoGenerating)
+    {
+        clearInterval(isAutoGenerating);
+        isAutoGenerating = null;
+    }
+    else
+    {
+        isAutoGenerating = setInterval(generateRandomIP, 1000);
+    }
+}
+
+function autoRandom()
+{
+    autoRandomButton.removeEventListener("click", autoRandom);
+    autoRandomButton.addEventListener("click", stopAutoRandom);
+    autoRandomButton.textContent = "STOP";
+    randomAutoGenerate();
+}
+
+function stopAutoRandom()
+{
+    autoRandomButton.removeEventListener("click", stopAutoRandom);
+    autoRandomButton.addEventListener("click", autoRandom);
+    autoRandomButton.textContent = "AUTO-RANDOM";
+    randomAutoGenerate();
 }
